@@ -109,7 +109,7 @@ HTML;
             <input type="radio" name="radio" id="radio4" value="3" >
             <label for="radio5"><img src=$images[4] /></label>
             <input type="radio" name="radio" id="radio5" value="4" >
-        </>
+        </p>
 HTML;
         }
 

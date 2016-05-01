@@ -33,6 +33,9 @@ class Controller
                 $pipe = new Tile(Tile::PIPE, $turn);
                 $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
                 $this->steampunked->nextTurn();
+                $view = new View($this->steampunked);
+                $html = $view->createGrid();
+                $this->result = json_encode(array('ok' => true, 'html' => $html));
             }
             else if ($result == Steampunked::LOSE) {
                 $this->steampunked->setContinued(false);
@@ -43,6 +46,9 @@ class Controller
             $turn = $this->steampunked->getTurn();
             $ndx = intval($post['radio']);
             $this->steampunked->getPlayer($turn)->getSelections()[$ndx]->rotate();
+            $view = new View($this->steampunked);
+            $html = $view->createGrid();
+            $this->result = json_encode(array('ok' => true, 'html' => $html));
         }
         else if(isset($post['discard']) and isset($post['radio'])){
             $turn = $this->steampunked->getTurn();
@@ -81,7 +87,16 @@ class Controller
         return $this->page;
     }
 
+    /**
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
     private $page = 'game.php';     // The next page we will go to
     private $steampunked;
     private $reset = false;
+    private $result = "";
 }

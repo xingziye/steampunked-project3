@@ -7,5 +7,9 @@ if($controller->isReset()) {
 
 }
 
-header("location: " . $controller->getPage());
-exit;
+if (empty($controller->getResult())) {
+    header("location: " . $controller->getPage());
+    exit;
+} else {
+    echo $controller->getResult();
+}
