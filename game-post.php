@@ -6,7 +6,10 @@ if($controller->isReset()) {
     unset($_SESSION[STEAMPUNKED_SESSION]);
 
 }
-echo $controller->getResult();
 
-//header("location: " . $controller->getPage());
-exit;
+if (empty($controller->getResult())) {
+    header("location: " . $controller->getPage());
+    exit;
+} else {
+    echo $controller->getResult();
+}
