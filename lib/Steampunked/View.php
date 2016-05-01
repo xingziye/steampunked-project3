@@ -19,6 +19,85 @@ class View
         $this->game = $steampunked;
     }
 
+    public function getGameGrid(){
+
+        $html=<<<HTML
+            <form method="post" action="game-post.php">
+            <div class="game">
+HTML;
+
+        ///loop for Number X Number grid
+        $size = $this->game->getSize();
+        for ($row = 0; $row < $size; $row++) {
+            $html .= "<div class=\"row\">";
+            for ($col = -1; $col < $size + 1; $col++) {
+                if ($col == -1) {
+                    $valves = $this->game->getValves();
+                    $image = $this->getImage($valves[$row]);
+                    $html .= "<div class=\"cell\"><img src=$image></div>";
+                }
+                else if ($col == $size) {
+                    $gauges = $this->game->getGauges();
+                    $image = $this->getImage($gauges[$row]);
+                    $html .= "<div class=\"cell\"><img src=$image></div>";
+                } else {
+                    $pipe = $this->game->getPipe($row, $col);
+                    if ($pipe !== null and $pipe->getType() == Tile::LEAK and $pipe->getId() == $this->game->getTurn()) {
+                        switch($pipe->open()) {
+                            case array("N"=>true, "E"=>false, "S"=>false, "W"=>false):
+                                $html .= "<div class=\"cell\"><input class='north' type=\"submit\" name=\"leak\" value=\"$row, $col\"></div>";
+                                break;
+                            case array("N"=>false, "E"=>true, "S"=>false, "W"=>false):
+                                $html .= "<div class=\"cell\"><input class='east' type=\"submit\" name=\"leak\" value=\"$row, $col\"></div>";
+                                break;
+                            case array("N"=>false, "E"=>false, "S"=>true, "W"=>false):
+                                $html .= "<div class=\"cell\"><input class='south' type=\"submit\" name=\"leak\" value=\"$row, $col\"></div>";
+                                break;
+                            case array("N"=>false, "E"=>false, "S"=>false, "W"=>true):
+                                $html .= "<div class=\"cell\"><input class='west' type=\"submit\" name=\"leak\" value=\"$row, $col\"></div>";
+                        }
+                    } else {
+                        $image = $this->getImage($pipe);
+                        $html .= "<div class=\"cell\"><img src=$image></div>";
+                    }
+                }
+            }
+            $html .= "</div>";
+
+        }
+
+        $html .= "</div>";
+
+        $html .= $this->presentTurn();
+        $html .= $this->createRadioButtons();
+
+        if($this->game->isContinued() == false){
+            $html .= <<<HTML
+        <div class="options">
+            <p class="option"><input type="submit" name="newgame" value="New Game"></p>
+        </div>
+        </form>
+
+HTML;
+        }
+        else{
+            $html .= <<<HTML
+        <div class="options">
+            <p class="option"><input type="submit" name="rotate" value="Rotate"></p>
+            <p class="option"><input type="submit" name="discard" value="Discard"></p>
+            <p class="option"><input type="submit" name="open" value="Open Valve"></p>
+            <p class="option"><input type="submit" name="giveup" value="Give Up"></p>
+        </div>
+        </form>
+
+HTML;
+        }
+        
+        return $html;
+
+
+    }
+
     public function createGrid(){
 
         $html = <<<HTML
