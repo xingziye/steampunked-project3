@@ -10,7 +10,13 @@ $view = new Steampunked\View($steampunked);
     <meta charset="UTF-8">
     <title>Steampunked</title>
     <link href="project1.css" type="text/css" rel="stylesheet" />
-    <script
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="jslib/Steampunked.js"></script>
+    <script>
+        $(document).ready(function() {
+            new Steampunked("form");
+        });
+    </script>
 </head>
 <body>
     <?php echo $view->createGrid(); ?>
