@@ -34,12 +34,13 @@ class Controller
                 $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
                 $this->steampunked->nextTurn();
                 $view = new View($this->steampunked);
-                $html = $view->createGrid();
+                $html = $view->getGameGrid();
                 $this->result = json_encode(array('ok' => true, 'html' => $html));
             }
             else if ($result == Steampunked::LOSE) {
                 $this->steampunked->setContinued(false);
                 $this->steampunked->nextTurn();
+                $this->result = json_encode(array('ok' => false, 'message' => "error"));
             }
         }
         else if(isset($post['rotate']) and isset($post['radio'])){
@@ -47,7 +48,7 @@ class Controller
             $ndx = intval($post['radio']);
             $this->steampunked->getPlayer($turn)->getSelections()[$ndx]->rotate();
             $view = new View($this->steampunked);
-            $html = $view->createGrid();
+            $html = $view->getGameGrid();
             $this->result = json_encode(array('ok' => true, 'html' => $html));
         }
         else if(isset($post['discard']) and isset($post['radio'])){
@@ -56,6 +57,9 @@ class Controller
             $pipe = new Tile(Tile::PIPE, $turn);
             $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
             $this->steampunked->nextTurn();
+            $view = new View($this->steampunked);
+            $html = $view->getGameGrid();
+            $this->result = json_encode(array('ok' => true, 'html' => $html));
         }
         else if(isset($post['open'])){
             $turn = $this->steampunked->getTurn();
@@ -65,10 +69,16 @@ class Controller
             } else {
                 $this->steampunked->setContinued(false);
             }
+            $view = new View($this->steampunked);
+            $html = $view->getGameGrid();
+            $this->result = json_encode(array('ok' => true, 'html' => $html));
         }
         else if(isset($post['giveup'])){
             $this->steampunked->nextTurn();
             $this->steampunked->setContinued(false);
+            $view = new View($this->steampunked);
+            $html = $view->getGameGrid();
+            $this->result = json_encode(array('ok' => true, 'html' => $html));
         }
         else if(isset($post['newgame'])){
             $this->page = './';

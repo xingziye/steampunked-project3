@@ -77,7 +77,6 @@ HTML;
             <p class="option"><input type="submit" name="newgame" value="New Game"></p>
         </div>
         </form>
-
 HTML;
         }
         else{
@@ -89,7 +88,6 @@ HTML;
             <p class="option"><input type="submit" name="giveup" value="Give Up"></p>
         </div>
         </form>
-
 HTML;
         }
         

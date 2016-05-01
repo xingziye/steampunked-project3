@@ -10,13 +10,42 @@ function Steampunked(sel) {
                 var json = parse_json(data);
                 if(json.ok) {
                     // Successfully updated
-                    console.log(json.html);
-                    console.log($(sel + ' .container'));
-                    $('.container').replaceWith(json.html);
+                    $(sel).replaceWith(json.html);
+                    new Steampunked(sel);
                 } else {
                     // Update failed
-                    $(sel + " .message").text(json.message);
-                    $(that).removeClass("clicked");
+                    concole.log("update failed");
+                }
+            },
+            error: function(xhr, status, error) {
+                // Error
+                concole.log("error");
+            }
+        });
+    });
+
+    var inputs = $(sel + ' .option input');
+    inputs.click(function(event) {
+        if ($(this).val() == "New Game") {
+            return;
+        }
+        event.preventDefault();
+        var data = { 'ajax_name': 'services_list_table' };
+        data[$(this).attr('name')] = $(this).val();
+        data['radio'] = $(sel + ' input[name=radio]:checked').val();
+        $.ajax({
+            url: "game-post.php",
+            data: data,
+            method: "POST",
+            success: function(data) {
+                var json = parse_json(data);
+                if(json.ok) {
+                    // Successfully updated
+                    $(sel).replaceWith(json.html);
+                    new Steampunked(sel);
+                } else {
+                    // Update failed
+                    concole.log("update failed");
                 }
             },
             error: function(xhr, status, error) {
