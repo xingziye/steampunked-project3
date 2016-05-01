@@ -1,0 +1,105 @@
+html, body, header, footer, nav, article, section, figure,
+figcaption, h1, h2, h3, ul, li, body, div, p, img {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
+}
+
+div.game {
+    display: inline-block;
+    margin: 1em auto;
+    border: thin solid black;
+    padding: 1em 0;
+}
+
+div.game div.row {
+    display: block;
+    padding: 0;
+    height: 50px;
+    white-space: nowrap;
+}
+
+div.game div.cell {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    min-height: 50px;
+    min-width: 50px;
+}
+
+div.container{
+    margin-top: 2em;
+    text-align: center;
+
+}
+
+p.message{
+    font-size: 2em;
+}
+
+p.pieces{
+    margin-top: 2em;
+}
+
+
+
+p.option{
+    display: inline-block;
+    vertical-align: top;
+    padding: 1em;
+}
+
+
+div.screen {
+    text-align: center;
+    margin-top: 1em;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+fieldset{
+    margin-top: 2em;
+    margin-left: auto ;
+    margin-right: auto;
+    width: 500px;
+}
+div.win_p p{
+    font-size: 1.25em;
+    font-weight: lighter;
+}
+
+div.cell input {
+    border: 0;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    text-indent: -999px;
+    font-size: 0;
+    line-height: 0;
+    display: block;
+}
+
+div.cell input:hover {
+    background-color: #C3FDB8;
+}
+
+div.cell input.north {
+    background-image: url("images/leak-n.png");
+}
+
+div.cell input.east {
+    background-image: url("images/leak-e.png");
+}
+
+div.cell input.south {
+    background-image: url("images/leak-s.png");
+}
+
+div.cell input.west {
+    background-image: url("images/leak-w.png");
+}
