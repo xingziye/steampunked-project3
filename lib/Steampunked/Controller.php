@@ -81,6 +81,12 @@ class Controller
         return $this->page;
     }
 
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    private $result=null;
     private $page = 'game.php';     // The next page we will go to
     private $steampunked;
     private $reset = false;
